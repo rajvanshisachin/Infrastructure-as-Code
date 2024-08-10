@@ -11,16 +11,14 @@ provider "aws" {
         region = "us-east-1"
 }
 locals {
-instance_names = toset(["Raj","Vidit","Rajvanshi","Gupta","Akhil"])
+instances = ("Raj":"ami-08c40ec9ead489470","Vidit":"ami-08c40ec9ead489470","Rajvanshi":"0b0dcb5067f052a63","Gupta":"0b0dcb5067f052a63","Akhil":"0b0dcb5067f052a63")
 }
 resource "aws_instance" "my_instance" {
-       #count = 5
         for_each = local_instances 
-        ami = "ami-08c40ec9ead489470"
+        ami = each.key
         instance_type = "t2.micro"
         tags = {
-               #Name = "Batches"
-                Name = each.key
+                Name = each.value
 }
 }
 
